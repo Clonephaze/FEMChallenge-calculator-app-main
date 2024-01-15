@@ -52,7 +52,9 @@ buttons.forEach(button => {
                         try {
                             let answer = eval(mathCollection + display.innerText);
                             if (typeof answer === 'number') {
-                                answer = answer.toFixed(3);
+                                let answerStr = answer.toFixed(3);
+                                answerStr = answerStr.replace(/(\.\d+?)0+$/, '$1').replace(/\.$/, '');
+                                answer = parseFloat(answerStr);
                                 display.innerText = answer;
                                 mathCollection = '';
                                 display.setAttribute('data-answered', 'true');
