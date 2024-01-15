@@ -30,18 +30,31 @@ buttons.forEach(button => {
                 case '+':
                 case '-':
                 case '/':
-                    mathCollection += display.innerText + e.target.innerText;
-                    display.innerText = '0';
-                break;
                 case 'x':
-                    mathCollection += display.innerText + '*';
-                    display.innerText = '0';
+                    let operationMap = {'+': '+', '-': '-', '/': '/', 'x': '*'};
+                    if (mathCollection.length == 0) {
+                        mathCollection += '(' + display.innerText + operationMap[e.target.innerText];
+                        display.innerText = '0';
+                        return
+                    } else {
+                        mathCollection = '(' + mathCollection + display.innerText + ')' + operationMap[e.target.innerText];
+                        display.innerText = '0';
+                    }
+                break;
                 case '=':
                     if (mathCollection.length == 0) {
                         return
                     } else {
+                        let regex = /^[\d+\-*/\(\)]+$/;
+
+                        if (!regex.test(mathCollection + display.innerText + ')')) {
+                            display.innerText = 'ERROR';
+                            mathCollection = '';
+                            display.setAttribute('data-answered', 'true');
+                            return;
+                        }
                         try {
-                            let answer = eval(mathCollection + display.innerText);
+                            let answer = eval(mathCollection + display.innerText + ')');
                             if (typeof answer === 'number') {
                                 display.innerText = answer;
                                 mathCollection = '';
