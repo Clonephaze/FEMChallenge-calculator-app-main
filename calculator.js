@@ -45,7 +45,8 @@ buttons.forEach(button => {
                     if (mathCollection.length == 0) {
                         return
                     } else {
-                        let regex = /^[\d+\-*/\(\)]+$/;
+                        let regex = /^[\d+\-*/\(\).]+$/;
+
 
                         if (!regex.test(mathCollection + display.innerText + ')')) {
                             display.innerText = 'ERROR';
