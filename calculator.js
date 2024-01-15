@@ -32,14 +32,9 @@ buttons.forEach(button => {
                 case '/':
                 case 'x':
                     let operationMap = {'+': '+', '-': '-', '/': '/', 'x': '*'};
-                    if (mathCollection.length == 0) {
-                        mathCollection += '(' + display.innerText + operationMap[e.target.innerText];
-                        display.innerText = '0';
-                        return
-                    } else {
-                        mathCollection = '(' + mathCollection + display.innerText + ')' + operationMap[e.target.innerText];
-                        display.innerText = '0';
-                    }
+                    mathCollection += display.innerText + operationMap[e.target.innerText];
+                    console.log(mathCollection);
+                    display.innerText = '0';
                 break;
                 case '=':
                     if (mathCollection.length == 0) {
@@ -48,15 +43,16 @@ buttons.forEach(button => {
                         let regex = /^[\d+\-*/\(\).]+$/;
 
 
-                        if (!regex.test(mathCollection + display.innerText + ')')) {
+                        if (!regex.test(mathCollection + display.innerText)) {
                             display.innerText = 'ERROR';
                             mathCollection = '';
                             display.setAttribute('data-answered', 'true');
                             return;
                         }
                         try {
-                            let answer = eval(mathCollection + display.innerText + ')');
+                            let answer = eval(mathCollection + display.innerText);
                             if (typeof answer === 'number') {
+                                answer = answer.toFixed(3);
                                 display.innerText = answer;
                                 mathCollection = '';
                                 display.setAttribute('data-answered', 'true');
