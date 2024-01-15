@@ -29,12 +29,13 @@ buttons.forEach(button => {
                 break;
                 case '+':
                 case '-':
-                case 'x':
                 case '/':
                     mathCollection += display.innerText + e.target.innerText;
-                    console.log(mathCollection);
                     display.innerText = '0';
                 break;
+                case 'x':
+                    mathCollection += display.innerText + '*';
+                    display.innerText = '0';
                 case '=':
                     if (mathCollection.length == 0) {
                         return
